@@ -1,0 +1,123 @@
+class Enemy {
+    field int row;
+    field int col;
+
+    constructor Enemy new(int startRow, int startCol) {
+        let row = startRow;
+        let col = startCol;
+        return this;
+    }
+
+    method void reset(int startRow, int startCol) {
+        let row = startRow;
+        let col = startCol;
+        return;
+    }
+
+    method void chase(Maze maze, int targetRow, int targetCol) {
+        var int rowStep;
+        var int colStep;
+        var int bestDist;
+        var int nextRow;
+        var int nextCol;
+        var int dist;
+
+        let bestDist = 32767;
+        let rowStep = 0;
+        let colStep = 0;
+
+        let nextRow = row - 1;
+        let nextCol = col;
+        if (~maze.isWall(nextRow, nextCol)) {
+            let dist = abs(nextRow - targetRow) + abs(nextCol - targetCol);
+            if (dist < bestDist) {
+                let bestDist = dist;
+                let rowStep = -1;
+                let colStep = 0;
+            }
+        }
+
+        let nextRow = row + 1;
+        let nextCol = col;
+        if (~maze.isWall(nextRow, nextCol)) {
+            let dist = abs(nextRow - targetRow) + abs(nextCol - targetCol);
+            if (dist < bestDist) {
+                let bestDist = dist;
+                let rowStep = 1;
+                let colStep = 0;
+            }
+        }
+
+        let nextRow = row;
+        let nextCol = col - 1;
+        if (~maze.isWall(nextRow, nextCol)) {
+            let dist = abs(nextRow - targetRow) + abs(nextCol - targetCol);
+            if (dist < bestDist) {
+                let bestDist = dist;
+                let rowStep = 0;
+                let colStep = -1;
+            }
+        }
+
+        let nextRow = row;
+        let nextCol = col + 1;
+        if (~maze.isWall(nextRow, nextCol)) {
+            let dist = abs(nextRow - targetRow) + abs(nextCol - targetCol);
+            if (dist < bestDist) {
+                let bestDist = dist;
+                let rowStep = 0;
+                let colStep = 1;
+            }
+        }
+
+        if (~((rowStep = 0) & (colStep = 0))) {
+            let row = row + rowStep;
+            let col = col + colStep;
+        }
+
+        return;
+    }
+
+    method int abs(int value) {
+        if (value < 0) {
+            return -value;
+        }
+
+        return value;
+    }
+
+    method void draw(Maze maze) {
+        var int x1;
+        var int y1;
+        var int x2;
+        var int y2;
+        var int margin;
+        var int size;
+
+        let margin = 5;
+        let size = maze.getTileSize();
+        let x1 = maze.getCellX(col) + margin;
+        let y1 = maze.getCellY(row) + margin;
+        let x2 = x1 + size - (margin + margin) - 1;
+        let y2 = y1 + size - (margin + margin) - 1;
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x1 + 2, y1 + 2, x2 - 2, y2 - 2);
+        return;
+    }
+
+    method boolean isAt(int targetRow, int targetCol) {
+        return (row = targetRow) & (col = targetCol);
+    }
+
+    method int getRow() {
+        return row;
+    }
+
+    method int getCol() {
+        return col;
+    }
+}

@@ -1,0 +1,880 @@
+function Maze.new 0
+    push constant 14
+    call Memory.alloc 1
+    pop pointer 0
+    push constant 20
+    pop this 0
+    push constant 14
+    pop this 1
+    push constant 16
+    pop this 2
+    push constant 16
+    pop this 3
+    push constant 16
+    pop this 4
+    push constant 1
+    pop this 5
+    push constant 1
+    pop this 6
+    push pointer 0
+    push constant 0
+    call Maze.setEnemyStartFromSeed 2
+    pop temp 0
+    push constant 2
+    pop this 9
+    push constant 14
+    pop this 10
+    push constant 10
+    pop this 11
+    push constant 7
+    pop this 12
+    push this 0
+    push this 1
+    call Math.multiply 2
+    call Array.new 1
+    pop this 13
+    push pointer 0
+    call Maze.buildMap 1
+    pop temp 0
+    push pointer 0
+    return
+function Maze.buildMap 2
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 0
+label Maze_0
+    push local 0
+    push this 1
+    lt
+    not
+    if-goto Maze_1
+    push constant 0
+    pop local 1
+label Maze_2
+    push local 1
+    push this 0
+    lt
+    not
+    if-goto Maze_3
+    push pointer 0
+    push local 0
+    push local 1
+    push constant 0
+    call Maze.setTile 4
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Maze_2
+label Maze_3
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Maze_0
+label Maze_1
+    push pointer 0
+    call Maze.addBorder 1
+    pop temp 0
+    push pointer 0
+    push constant 1
+    push constant 1
+    push constant 10
+    push constant 13
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 2
+    push constant 4
+    push constant 2
+    push constant 3
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 2
+    push constant 5
+    push constant 5
+    push constant 5
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 2
+    push constant 3
+    push constant 7
+    push constant 9
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 3
+    push constant 3
+    push constant 10
+    push constant 14
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 2
+    push constant 3
+    push constant 15
+    push constant 17
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 5
+    push constant 5
+    push constant 1
+    push constant 3
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 5
+    push constant 6
+    push constant 7
+    push constant 9
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 5
+    push constant 6
+    push constant 11
+    push constant 12
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 5
+    push constant 6
+    push constant 15
+    push constant 17
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 7
+    push constant 7
+    push constant 5
+    push constant 5
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 8
+    push constant 9
+    push constant 2
+    push constant 3
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 8
+    push constant 10
+    push constant 5
+    push constant 5
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 8
+    push constant 9
+    push constant 7
+    push constant 7
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 8
+    push constant 9
+    push constant 9
+    push constant 10
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 8
+    push constant 9
+    push constant 12
+    push constant 13
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 8
+    push constant 9
+    push constant 15
+    push constant 17
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 11
+    push constant 11
+    push constant 2
+    push constant 3
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 11
+    push constant 11
+    push constant 5
+    push constant 7
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 11
+    push constant 12
+    push constant 10
+    push constant 10
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 11
+    push constant 11
+    push constant 12
+    push constant 15
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 11
+    push constant 11
+    push constant 17
+    push constant 17
+    call Maze.addWallBlock 5
+    pop temp 0
+    push pointer 0
+    push constant 2
+    push constant 9
+    push constant 0
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push constant 3
+    push constant 12
+    push constant 0
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push constant 4
+    push constant 2
+    push constant 0
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push constant 4
+    push constant 3
+    push constant 0
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push constant 5
+    push constant 14
+    push constant 1
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push constant 6
+    push constant 14
+    push constant 1
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push this 5
+    push this 6
+    push constant 0
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push this 7
+    push this 8
+    push constant 0
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push this 9
+    push this 10
+    push constant 0
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push this 11
+    push this 12
+    push constant 0
+    call Maze.setTile 4
+    pop temp 0
+    push constant 0
+    return
+function Maze.addWallBlock 2
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop local 0
+label Maze_4
+    push local 0
+    push argument 2
+    push constant 1
+    add
+    lt
+    not
+    if-goto Maze_5
+    push argument 3
+    pop local 1
+label Maze_6
+    push local 1
+    push argument 4
+    push constant 1
+    add
+    lt
+    not
+    if-goto Maze_7
+    push pointer 0
+    push local 0
+    push local 1
+    push constant 1
+    call Maze.setTile 4
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Maze_6
+label Maze_7
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Maze_4
+label Maze_5
+    push constant 0
+    return
+function Maze.addBorder 2
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 0
+label Maze_8
+    push local 0
+    push this 0
+    lt
+    not
+    if-goto Maze_9
+    push pointer 0
+    push constant 0
+    push local 0
+    push constant 1
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push this 1
+    push constant 1
+    sub
+    push local 0
+    push constant 1
+    call Maze.setTile 4
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Maze_8
+label Maze_9
+    push constant 0
+    pop local 1
+label Maze_10
+    push local 1
+    push this 1
+    lt
+    not
+    if-goto Maze_11
+    push pointer 0
+    push local 1
+    push constant 0
+    push constant 1
+    call Maze.setTile 4
+    pop temp 0
+    push pointer 0
+    push local 1
+    push this 0
+    push constant 1
+    sub
+    push constant 1
+    call Maze.setTile 4
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Maze_10
+label Maze_11
+    push constant 0
+    return
+function Maze.addHorizontalWall 1
+    push argument 0
+    pop pointer 0
+    push argument 2
+    pop local 0
+label Maze_12
+    push local 0
+    push argument 3
+    push constant 1
+    add
+    lt
+    not
+    if-goto Maze_13
+    push local 0
+    push argument 4
+    eq
+    not
+    not
+    if-goto Maze_15
+    push pointer 0
+    push argument 1
+    push local 0
+    push constant 1
+    call Maze.setTile 4
+    pop temp 0
+    goto Maze_14
+label Maze_15
+label Maze_14
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Maze_12
+label Maze_13
+    push constant 0
+    return
+function Maze.addVerticalWall 1
+    push argument 0
+    pop pointer 0
+    push argument 2
+    pop local 0
+label Maze_16
+    push local 0
+    push argument 3
+    push constant 1
+    add
+    lt
+    not
+    if-goto Maze_17
+    push local 0
+    push argument 4
+    eq
+    not
+    not
+    if-goto Maze_19
+    push pointer 0
+    push local 0
+    push argument 1
+    push constant 1
+    call Maze.setTile 4
+    pop temp 0
+    goto Maze_18
+label Maze_19
+label Maze_18
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Maze_16
+label Maze_17
+    push constant 0
+    return
+function Maze.setTile 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    push argument 1
+    push argument 2
+    call Maze.index 3
+    push this 13
+    add
+    push argument 3
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 0
+    return
+function Maze.getTile 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    push argument 1
+    push argument 2
+    call Maze.index 3
+    push this 13
+    add
+    pop pointer 1
+    push that 0
+    return
+function Maze.isWall 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push constant 0
+    lt
+    not
+    if-goto Maze_21
+    push constant 1
+    neg
+    return
+    goto Maze_20
+label Maze_21
+label Maze_20
+    push argument 2
+    push constant 0
+    lt
+    not
+    if-goto Maze_23
+    push constant 1
+    neg
+    return
+    goto Maze_22
+label Maze_23
+label Maze_22
+    push argument 1
+    push this 1
+    push constant 1
+    sub
+    gt
+    not
+    if-goto Maze_25
+    push constant 1
+    neg
+    return
+    goto Maze_24
+label Maze_25
+label Maze_24
+    push argument 2
+    push this 0
+    push constant 1
+    sub
+    gt
+    not
+    if-goto Maze_27
+    push constant 1
+    neg
+    return
+    goto Maze_26
+label Maze_27
+label Maze_26
+    push pointer 0
+    push argument 1
+    push argument 2
+    call Maze.getTile 3
+    return
+function Maze.index 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push this 0
+    call Math.multiply 2
+    push argument 2
+    add
+    return
+function Maze.draw 2
+    push argument 0
+    pop pointer 0
+    call Screen.clearScreen 0
+    pop temp 0
+    push constant 0
+    pop local 0
+label Maze_28
+    push local 0
+    push this 1
+    lt
+    not
+    if-goto Maze_29
+    push constant 0
+    pop local 1
+label Maze_30
+    push local 1
+    push this 0
+    lt
+    not
+    if-goto Maze_31
+    push pointer 0
+    push local 0
+    push local 1
+    call Maze.drawCell 3
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Maze_30
+label Maze_31
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Maze_28
+label Maze_29
+    push constant 0
+    return
+function Maze.drawCell 5
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    push argument 2
+    call Maze.getCellX 2
+    pop local 0
+    push pointer 0
+    push argument 1
+    call Maze.getCellY 2
+    pop local 1
+    push local 0
+    push this 2
+    add
+    push constant 1
+    sub
+    pop local 2
+    push local 1
+    push this 2
+    add
+    push constant 1
+    sub
+    pop local 3
+    push constant 1
+    pop local 4
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push local 0
+    push local 1
+    push local 2
+    push local 3
+    call Screen.drawRectangle 4
+    pop temp 0
+    push pointer 0
+    push argument 1
+    push argument 2
+    call Maze.isWall 3
+    not
+    not
+    if-goto Maze_33
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push local 0
+    push local 4
+    add
+    push local 1
+    push local 4
+    add
+    push local 2
+    push local 4
+    sub
+    push local 3
+    push local 4
+    sub
+    call Screen.drawRectangle 4
+    pop temp 0
+    goto Maze_32
+label Maze_33
+label Maze_32
+    push constant 0
+    return
+function Maze.drawFoodOne 4
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    push this 10
+    call Maze.getCellX 2
+    push constant 5
+    add
+    pop local 0
+    push pointer 0
+    push this 9
+    call Maze.getCellY 2
+    push constant 5
+    add
+    pop local 1
+    push local 0
+    push constant 5
+    add
+    pop local 2
+    push local 1
+    push constant 5
+    add
+    pop local 3
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push local 0
+    push local 1
+    push local 2
+    push local 3
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    return
+function Maze.drawFoodTwo 4
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    push this 12
+    call Maze.getCellX 2
+    push constant 5
+    add
+    pop local 0
+    push pointer 0
+    push this 11
+    call Maze.getCellY 2
+    push constant 5
+    add
+    pop local 1
+    push local 0
+    push constant 5
+    add
+    pop local 2
+    push local 1
+    push constant 5
+    add
+    pop local 3
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push local 0
+    push local 1
+    push local 2
+    push local 3
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    return
+function Maze.getCellX 0
+    push argument 0
+    pop pointer 0
+    push this 3
+    push argument 1
+    push this 2
+    call Math.multiply 2
+    add
+    return
+function Maze.getCellY 0
+    push argument 0
+    pop pointer 0
+    push this 4
+    push argument 1
+    push this 2
+    call Math.multiply 2
+    add
+    return
+function Maze.getTileSize 0
+    push argument 0
+    pop pointer 0
+    push this 2
+    return
+function Maze.getWidth 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    return
+function Maze.getHeight 0
+    push argument 0
+    pop pointer 0
+    push this 1
+    return
+function Maze.getPlayerStartRow 0
+    push argument 0
+    pop pointer 0
+    push this 5
+    return
+function Maze.getPlayerStartCol 0
+    push argument 0
+    pop pointer 0
+    push this 6
+    return
+function Maze.getEnemyStartRow 0
+    push argument 0
+    pop pointer 0
+    push this 7
+    return
+function Maze.getEnemyStartCol 0
+    push argument 0
+    pop pointer 0
+    push this 8
+    return
+function Maze.getGoalRow 0
+    push argument 0
+    pop pointer 0
+    push this 9
+    return
+function Maze.getGoalCol 0
+    push argument 0
+    pop pointer 0
+    push this 10
+    return
+function Maze.getFoodTwoRow 0
+    push argument 0
+    pop pointer 0
+    push this 11
+    return
+function Maze.getFoodTwoCol 0
+    push argument 0
+    pop pointer 0
+    push this 12
+    return
+function Maze.refreshEnemyStart 0
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    push constant 3
+    call Maze.setEnemyStartFromSeed 2
+    pop temp 0
+    push constant 0
+    return
+function Maze.setEnemyStartFromSeed 1
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop local 0
+label Maze_34
+    push local 0
+    push constant 15
+    gt
+    not
+    if-goto Maze_35
+    push local 0
+    push constant 16
+    sub
+    pop local 0
+    goto Maze_34
+label Maze_35
+    push local 0
+    push constant 4
+    lt
+    not
+    if-goto Maze_37
+    push constant 1
+    pop this 7
+    push constant 17
+    pop this 8
+    goto Maze_36
+label Maze_37
+    push local 0
+    push constant 8
+    lt
+    not
+    if-goto Maze_39
+    push constant 10
+    pop this 7
+    push constant 2
+    pop this 8
+    goto Maze_38
+label Maze_39
+    push local 0
+    push constant 12
+    lt
+    not
+    if-goto Maze_41
+    push constant 12
+    pop this 7
+    push constant 17
+    pop this 8
+    goto Maze_40
+label Maze_41
+    push constant 4
+    pop this 7
+    push constant 16
+    pop this 8
+label Maze_40
+label Maze_38
+label Maze_36
+    push constant 0
+    return

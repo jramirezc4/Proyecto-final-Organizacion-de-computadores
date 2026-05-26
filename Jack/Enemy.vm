@@ -1,0 +1,327 @@
+function Enemy.new 0
+    push constant 2
+    call Memory.alloc 1
+    pop pointer 0
+    push argument 0
+    pop this 0
+    push argument 1
+    pop this 1
+    push pointer 0
+    return
+function Enemy.reset 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 0
+    push argument 2
+    pop this 1
+    push constant 0
+    return
+function Enemy.chase 6
+    push argument 0
+    pop pointer 0
+    push constant 32767
+    pop local 2
+    push constant 0
+    pop local 0
+    push constant 0
+    pop local 1
+    push this 0
+    push constant 1
+    sub
+    pop local 3
+    push this 1
+    pop local 4
+    push argument 1
+    push local 3
+    push local 4
+    call Maze.isWall 3
+    not
+    not
+    if-goto Enemy_1
+    push pointer 0
+    push local 3
+    push argument 2
+    sub
+    call Enemy.abs 2
+    push pointer 0
+    push local 4
+    push argument 3
+    sub
+    call Enemy.abs 2
+    add
+    pop local 5
+    push local 5
+    push local 2
+    lt
+    not
+    if-goto Enemy_3
+    push local 5
+    pop local 2
+    push constant 1
+    neg
+    pop local 0
+    push constant 0
+    pop local 1
+    goto Enemy_2
+label Enemy_3
+label Enemy_2
+    goto Enemy_0
+label Enemy_1
+label Enemy_0
+    push this 0
+    push constant 1
+    add
+    pop local 3
+    push this 1
+    pop local 4
+    push argument 1
+    push local 3
+    push local 4
+    call Maze.isWall 3
+    not
+    not
+    if-goto Enemy_5
+    push pointer 0
+    push local 3
+    push argument 2
+    sub
+    call Enemy.abs 2
+    push pointer 0
+    push local 4
+    push argument 3
+    sub
+    call Enemy.abs 2
+    add
+    pop local 5
+    push local 5
+    push local 2
+    lt
+    not
+    if-goto Enemy_7
+    push local 5
+    pop local 2
+    push constant 1
+    pop local 0
+    push constant 0
+    pop local 1
+    goto Enemy_6
+label Enemy_7
+label Enemy_6
+    goto Enemy_4
+label Enemy_5
+label Enemy_4
+    push this 0
+    pop local 3
+    push this 1
+    push constant 1
+    sub
+    pop local 4
+    push argument 1
+    push local 3
+    push local 4
+    call Maze.isWall 3
+    not
+    not
+    if-goto Enemy_9
+    push pointer 0
+    push local 3
+    push argument 2
+    sub
+    call Enemy.abs 2
+    push pointer 0
+    push local 4
+    push argument 3
+    sub
+    call Enemy.abs 2
+    add
+    pop local 5
+    push local 5
+    push local 2
+    lt
+    not
+    if-goto Enemy_11
+    push local 5
+    pop local 2
+    push constant 0
+    pop local 0
+    push constant 1
+    neg
+    pop local 1
+    goto Enemy_10
+label Enemy_11
+label Enemy_10
+    goto Enemy_8
+label Enemy_9
+label Enemy_8
+    push this 0
+    pop local 3
+    push this 1
+    push constant 1
+    add
+    pop local 4
+    push argument 1
+    push local 3
+    push local 4
+    call Maze.isWall 3
+    not
+    not
+    if-goto Enemy_13
+    push pointer 0
+    push local 3
+    push argument 2
+    sub
+    call Enemy.abs 2
+    push pointer 0
+    push local 4
+    push argument 3
+    sub
+    call Enemy.abs 2
+    add
+    pop local 5
+    push local 5
+    push local 2
+    lt
+    not
+    if-goto Enemy_15
+    push local 5
+    pop local 2
+    push constant 0
+    pop local 0
+    push constant 1
+    pop local 1
+    goto Enemy_14
+label Enemy_15
+label Enemy_14
+    goto Enemy_12
+label Enemy_13
+label Enemy_12
+    push local 0
+    push constant 0
+    eq
+    push local 1
+    push constant 0
+    eq
+    and
+    not
+    not
+    if-goto Enemy_17
+    push this 0
+    push local 0
+    add
+    pop this 0
+    push this 1
+    push local 1
+    add
+    pop this 1
+    goto Enemy_16
+label Enemy_17
+label Enemy_16
+    push constant 0
+    return
+function Enemy.abs 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push constant 0
+    lt
+    not
+    if-goto Enemy_19
+    push argument 1
+    neg
+    return
+    goto Enemy_18
+label Enemy_19
+label Enemy_18
+    push argument 1
+    return
+function Enemy.draw 6
+    push argument 0
+    pop pointer 0
+    push constant 5
+    pop local 4
+    push argument 1
+    call Maze.getTileSize 1
+    pop local 5
+    push argument 1
+    push this 1
+    call Maze.getCellX 2
+    push local 4
+    add
+    pop local 0
+    push argument 1
+    push this 0
+    call Maze.getCellY 2
+    push local 4
+    add
+    pop local 1
+    push local 0
+    push local 5
+    add
+    push local 4
+    push local 4
+    add
+    sub
+    push constant 1
+    sub
+    pop local 2
+    push local 1
+    push local 5
+    add
+    push local 4
+    push local 4
+    add
+    sub
+    push constant 1
+    sub
+    pop local 3
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push local 0
+    push local 1
+    push local 2
+    push local 3
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push local 0
+    push constant 2
+    add
+    push local 1
+    push constant 2
+    add
+    push local 2
+    push constant 2
+    sub
+    push local 3
+    push constant 2
+    sub
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    return
+function Enemy.isAt 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    push argument 1
+    eq
+    push this 1
+    push argument 2
+    eq
+    and
+    return
+function Enemy.getRow 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    return
+function Enemy.getCol 0
+    push argument 0
+    pop pointer 0
+    push this 1
+    return

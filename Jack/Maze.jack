@@ -1,0 +1,351 @@
+class Maze {
+    field int width;
+    field int height;
+    field int tileSize;
+    field int originX;
+    field int originY;
+    field int playerStartRow;
+    field int playerStartCol;
+    field int enemyStartRow;
+    field int enemyStartCol;
+    field int foodOneRow;
+    field int foodOneCol;
+    field int foodTwoRow;
+    field int foodTwoCol;
+    field Array tiles;
+
+    constructor Maze new() {
+        let width = 20;
+        let height = 14;
+        let tileSize = 16;
+        let originX = 16;
+        let originY = 16;
+        let playerStartRow = 1;
+        let playerStartCol = 1;
+        do setEnemyStartFromSeed(0);
+        let foodOneRow = 2;
+        let foodOneCol = 14;
+        let foodTwoRow = 10;
+        let foodTwoCol = 7;
+        let tiles = Array.new(width * height);
+
+        do buildMap();
+        return this;
+    }
+
+    method void buildMap() {
+        var int row;
+        var int col;
+
+        let row = 0;
+        while (row < height) {
+            let col = 0;
+            while (col < width) {
+                do setTile(row, col, 0);
+                let col = col + 1;
+            }
+            let row = row + 1;
+        }
+
+        do addBorder();
+
+        do addWallBlock(1, 1, 10, 13);
+        do addWallBlock(2, 4, 2, 3);
+        do addWallBlock(2, 5, 5, 5);
+        do addWallBlock(2, 3, 7, 9);
+        do addWallBlock(3, 3, 10, 14);
+        do addWallBlock(2, 3, 15, 17);
+
+        do addWallBlock(5, 5, 1, 3);
+        do addWallBlock(5, 6, 7, 9);
+        do addWallBlock(5, 6, 11, 12);
+        do addWallBlock(5, 6, 15, 17);
+
+        do addWallBlock(7, 7, 5, 5);
+        do addWallBlock(8, 9, 2, 3);
+        do addWallBlock(8, 10, 5, 5);
+        do addWallBlock(8, 9, 7, 7);
+        do addWallBlock(8, 9, 9, 10);
+        do addWallBlock(8, 9, 12, 13);
+        do addWallBlock(8, 9, 15, 17);
+
+        do addWallBlock(11, 11, 2, 3);
+        do addWallBlock(11, 11, 5, 7);
+        do addWallBlock(11, 12, 10, 10);
+        do addWallBlock(11, 11, 12, 15);
+        do addWallBlock(11, 11, 17, 17);
+
+        do setTile(2, 9, 0);
+        do setTile(3, 12, 0);
+        do setTile(4, 2, 0);
+        do setTile(4, 3, 0);
+        do setTile(5, 14, 1);
+        do setTile(6, 14, 1);
+
+        do setTile(playerStartRow, playerStartCol, 0);
+        do setTile(enemyStartRow, enemyStartCol, 0);
+        do setTile(foodOneRow, foodOneCol, 0);
+        do setTile(foodTwoRow, foodTwoCol, 0);
+
+        return;
+    }
+
+    method void addWallBlock(int startRow, int endRow, int startCol, int endCol) {
+        var int row;
+        var int col;
+
+        let row = startRow;
+        while (row < (endRow + 1)) {
+            let col = startCol;
+            while (col < (endCol + 1)) {
+                do setTile(row, col, 1);
+                let col = col + 1;
+            }
+            let row = row + 1;
+        }
+
+        return;
+    }
+
+    method void addBorder() {
+        var int col;
+        var int row;
+
+        let col = 0;
+        while (col < width) {
+            do setTile(0, col, 1);
+            do setTile(height - 1, col, 1);
+            let col = col + 1;
+        }
+
+        let row = 0;
+        while (row < height) {
+            do setTile(row, 0, 1);
+            do setTile(row, width - 1, 1);
+            let row = row + 1;
+        }
+
+        return;
+    }
+
+    method void addHorizontalWall(int row, int startCol, int endCol, int gapCol) {
+        var int col;
+
+        let col = startCol;
+        while (col < (endCol + 1)) {
+            if (~(col = gapCol)) {
+                do setTile(row, col, 1);
+            }
+            let col = col + 1;
+        }
+
+        return;
+    }
+
+    method void addVerticalWall(int col, int startRow, int endRow, int gapRow) {
+        var int row;
+
+        let row = startRow;
+        while (row < (endRow + 1)) {
+            if (~(row = gapRow)) {
+                do setTile(row, col, 1);
+            }
+            let row = row + 1;
+        }
+
+        return;
+    }
+
+    method void setTile(int row, int col, int value) {
+        let tiles[index(row, col)] = value;
+        return;
+    }
+
+    method int getTile(int row, int col) {
+        return tiles[index(row, col)];
+    }
+
+    method boolean isWall(int row, int col) {
+        if (row < 0) {
+            return true;
+        }
+
+        if (col < 0) {
+            return true;
+        }
+
+        if (row > (height - 1)) {
+            return true;
+        }
+
+        if (col > (width - 1)) {
+            return true;
+        }
+
+        return getTile(row, col);
+    }
+
+    method int index(int row, int col) {
+        return (row * width) + col;
+    }
+
+    method void draw() {
+        var int row;
+        var int col;
+
+        do Screen.clearScreen();
+
+        let row = 0;
+        while (row < height) {
+            let col = 0;
+            while (col < width) {
+                do drawCell(row, col);
+                let col = col + 1;
+            }
+            let row = row + 1;
+        }
+        return;
+    }
+
+    method void drawCell(int row, int col) {
+        var int x1;
+        var int y1;
+        var int x2;
+        var int y2;
+        var int gap;
+
+        let x1 = getCellX(col);
+        let y1 = getCellY(row);
+        let x2 = x1 + tileSize - 1;
+        let y2 = y1 + tileSize - 1;
+        let gap = 1;
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+
+        if (~isWall(row, col)) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x1 + gap, y1 + gap, x2 - gap, y2 - gap);
+        }
+
+        return;
+    }
+
+    method void drawFoodOne() {
+        var int x1;
+        var int y1;
+        var int x2;
+        var int y2;
+
+        let x1 = getCellX(foodOneCol) + 5;
+        let y1 = getCellY(foodOneRow) + 5;
+        let x2 = x1 + 5;
+        let y2 = y1 + 5;
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+        return;
+    }
+
+    method void drawFoodTwo() {
+        var int x1;
+        var int y1;
+        var int x2;
+        var int y2;
+
+        let x1 = getCellX(foodTwoCol) + 5;
+        let y1 = getCellY(foodTwoRow) + 5;
+        let x2 = x1 + 5;
+        let y2 = y1 + 5;
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+        return;
+    }
+
+    method int getCellX(int col) {
+        return originX + (col * tileSize);
+    }
+
+    method int getCellY(int row) {
+        return originY + (row * tileSize);
+    }
+
+    method int getTileSize() {
+        return tileSize;
+    }
+
+    method int getWidth() {
+        return width;
+    }
+
+    method int getHeight() {
+        return height;
+    }
+
+    method int getPlayerStartRow() {
+        return playerStartRow;
+    }
+
+    method int getPlayerStartCol() {
+        return playerStartCol;
+    }
+
+    method int getEnemyStartRow() {
+        return enemyStartRow;
+    }
+
+    method int getEnemyStartCol() {
+        return enemyStartCol;
+    }
+
+    method int getGoalRow() {
+        return foodOneRow;
+    }
+
+    method int getGoalCol() {
+        return foodOneCol;
+    }
+
+    method int getFoodTwoRow() {
+        return foodTwoRow;
+    }
+
+    method int getFoodTwoCol() {
+        return foodTwoCol;
+    }
+
+    method void refreshEnemyStart() {
+        do setEnemyStartFromSeed(3);
+        return;
+    }
+
+    method void setEnemyStartFromSeed(int seed) {
+        var int zone;
+
+        let zone = seed;
+        while (zone > 15) {
+            let zone = zone - 16;
+        }
+
+        if (zone < 4) {
+            let enemyStartRow = 1;
+            let enemyStartCol = 17;
+        } else {
+            if (zone < 8) {
+                let enemyStartRow = 10;
+                let enemyStartCol = 2;
+            } else {
+                if (zone < 12) {
+                    let enemyStartRow = 12;
+                    let enemyStartCol = 17;
+                } else {
+                    let enemyStartRow = 4;
+                    let enemyStartCol = 16;
+                }
+            }
+        }
+
+        return;
+    }
+}

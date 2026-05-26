@@ -1,0 +1,167 @@
+function Player.new 0
+    push constant 2
+    call Memory.alloc 1
+    pop pointer 0
+    push argument 0
+    pop this 0
+    push argument 1
+    pop this 1
+    push pointer 0
+    return
+function Player.reset 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 0
+    push argument 2
+    pop this 1
+    push constant 0
+    return
+function Player.tryMove 2
+    push argument 0
+    pop pointer 0
+    push this 0
+    push argument 2
+    add
+    pop local 0
+    push this 1
+    push argument 3
+    add
+    pop local 1
+    push argument 1
+    push local 0
+    push local 1
+    call Maze.isWall 3
+    not
+    not
+    if-goto Player_1
+    push local 0
+    pop this 0
+    push local 1
+    pop this 1
+    push constant 1
+    neg
+    return
+    goto Player_0
+label Player_1
+label Player_0
+    push constant 0
+    return
+function Player.draw 6
+    push argument 0
+    pop pointer 0
+    push constant 3
+    pop local 4
+    push argument 1
+    call Maze.getTileSize 1
+    pop local 5
+    push argument 1
+    push this 1
+    call Maze.getCellX 2
+    push local 4
+    add
+    pop local 0
+    push argument 1
+    push this 0
+    call Maze.getCellY 2
+    push local 4
+    add
+    pop local 1
+    push local 0
+    push local 5
+    add
+    push local 4
+    push local 4
+    add
+    sub
+    push constant 1
+    sub
+    pop local 2
+    push local 1
+    push local 5
+    add
+    push local 4
+    push local 4
+    add
+    sub
+    push constant 1
+    sub
+    pop local 3
+    push constant 1
+    neg
+    call Screen.setColor 1
+    pop temp 0
+    push local 0
+    push local 1
+    push local 2
+    push local 3
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    call Screen.setColor 1
+    pop temp 0
+    push local 0
+    push constant 2
+    add
+    push local 1
+    push constant 3
+    add
+    push local 0
+    push constant 3
+    add
+    push local 1
+    push constant 4
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push local 2
+    push constant 3
+    sub
+    push local 1
+    push constant 3
+    add
+    push local 2
+    push constant 2
+    sub
+    push local 1
+    push constant 4
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push local 0
+    push constant 3
+    add
+    push local 3
+    push constant 4
+    sub
+    push local 2
+    push constant 3
+    sub
+    push local 3
+    push constant 3
+    sub
+    call Screen.drawRectangle 4
+    pop temp 0
+    push constant 0
+    return
+function Player.isAt 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    push argument 1
+    eq
+    push this 1
+    push argument 2
+    eq
+    and
+    return
+function Player.getRow 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    return
+function Player.getCol 0
+    push argument 0
+    pop pointer 0
+    push this 1
+    return

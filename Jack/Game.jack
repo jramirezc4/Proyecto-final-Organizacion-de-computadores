@@ -1,0 +1,204 @@
+class Game {
+    field Maze maze;
+    field Player player;
+    field Enemy enemy;
+    field int state;
+    field int foodOneCollected;
+    field int foodTwoCollected;
+    field int enemyClock;
+    field int gameSeed;
+
+    constructor Game new() {
+        let maze = Maze.new();
+        let player = Player.new(maze.getPlayerStartRow(), maze.getPlayerStartCol());
+        let enemy = Enemy.new(maze.getEnemyStartRow(), maze.getEnemyStartCol());
+        let state = 0;
+        let foodOneCollected = 0;
+        let foodTwoCollected = 0;
+        let enemyClock = 0;
+        let gameSeed = 0;
+        return this;
+    }
+
+    method void run() {
+        do showTitle();
+
+        while (true) {
+            if (state = 0) {
+                do updateTitle();
+            } else {
+                if (state = 1) {
+                    do updatePlay();
+                } else {
+                    do updateEnd();
+                }
+            }
+
+            do Sys.wait(30);
+        }
+
+        return;
+    }
+
+    method void showTitle() {
+        do Screen.clearScreen();
+        do Output.moveCursor(2, 8);
+        do Output.printString("Maze Intelligence");
+        do Output.moveCursor(4, 2);
+        do Output.printString("WASD move the player");
+        do Output.moveCursor(5, 2);
+        do Output.printString("Collect the two foods before the enemy catches you");
+        do Output.moveCursor(7, 2);
+        do Output.printString("Press any key to start");
+        return;
+    }
+
+    method void updateTitle() {
+        var int key;
+
+        let key = Keyboard.keyPressed();
+        if (key = 0) {
+            return;
+        }
+
+        do startGame();
+
+        return;
+    }
+
+    method void startGame() {
+        let gameSeed = gameSeed + 3;
+        do maze.setEnemyStartFromSeed(gameSeed);
+        do resetActors();
+        let foodOneCollected = 0;
+        let foodTwoCollected = 0;
+        let enemyClock = 0;
+        let state = 1;
+        do renderPlay();
+        return;
+    }
+
+    method void resetActors() {
+        do player.reset(maze.getPlayerStartRow(), maze.getPlayerStartCol());
+        do enemy.reset(maze.getEnemyStartRow(), maze.getEnemyStartCol());
+        return;
+    }
+
+    method void updatePlay() {
+        var int key;
+
+        let key = Keyboard.keyPressed();
+
+        if (key = 119) {
+            do player.tryMove(maze, -1, 0);
+        } else {
+            if (key = 115) {
+                do player.tryMove(maze, 1, 0);
+            } else {
+                if (key = 97) {
+                    do player.tryMove(maze, 0, -1);
+                } else {
+                    if (key = 100) {
+                        do player.tryMove(maze, 0, 1);
+                    } else {
+                        if (key = 113) {
+                            do Sys.halt();
+                        }
+                    }
+                }
+            }
+        }
+
+        do checkFoodCollection();
+
+        if (enemy.isAt(player.getRow(), player.getCol())) {
+            let state = 3;
+            do showLose();
+            return;
+        }
+
+        if ((foodOneCollected = 1) & (foodTwoCollected = 1)) {
+            let state = 2;
+            do showWin();
+            return;
+        }
+
+        let enemyClock = enemyClock + 1;
+        if (~(enemyClock < 4)) {
+            do enemy.chase(maze, player.getRow(), player.getCol());
+            let enemyClock = 0;
+        }
+
+        if (enemy.isAt(player.getRow(), player.getCol())) {
+            let state = 3;
+            do showLose();
+            return;
+        }
+
+        do renderPlay();
+        return;
+    }
+
+    method void renderPlay() {
+        do maze.draw();
+        if (~(foodOneCollected = 1)) {
+            do maze.drawFoodOne();
+        }
+        if (~(foodTwoCollected = 1)) {
+            do maze.drawFoodTwo();
+        }
+        do player.draw(maze);
+        do enemy.draw(maze);
+        return;
+    }
+
+    method void showWin() {
+        do Screen.clearScreen();
+        do Output.moveCursor(3, 8);
+        do Output.printString("You collected both foods");
+        do Output.moveCursor(5, 2);
+        do Output.printString("Press R to play again or Q to quit");
+        return;
+    }
+
+    method void showLose() {
+        do Screen.clearScreen();
+        do Output.moveCursor(3, 8);
+        do Output.printString("The enemy caught you");
+        do Output.moveCursor(5, 2);
+        do Output.printString("Press R to retry or Q to quit");
+        return;
+    }
+
+    method void updateEnd() {
+        var int key;
+
+        let key = Keyboard.keyPressed();
+
+        if (key = 114) {
+            do startGame();
+        } else {
+            if (key = 113) {
+                do Sys.halt();
+            }
+        }
+
+        return;
+    }
+
+    method void checkFoodCollection() {
+        if (~(foodOneCollected = 1)) {
+            if (player.isAt(maze.getGoalRow(), maze.getGoalCol())) {
+                let foodOneCollected = 1;
+            }
+        }
+
+        if (~(foodTwoCollected = 1)) {
+            if (player.isAt(maze.getFoodTwoRow(), maze.getFoodTwoCol())) {
+                let foodTwoCollected = 1;
+            }
+        }
+
+        return;
+    }
+}

@@ -1,0 +1,69 @@
+class Player {
+    field int row;
+    field int col;
+
+    constructor Player new(int startRow, int startCol) {
+        let row = startRow;
+        let col = startCol;
+        return this;
+    }
+
+    method void reset(int startRow, int startCol) {
+        let row = startRow;
+        let col = startCol;
+        return;
+    }
+
+    method boolean tryMove(Maze maze, int rowStep, int colStep) {
+        var int nextRow;
+        var int nextCol;
+
+        let nextRow = row + rowStep;
+        let nextCol = col + colStep;
+
+        if (~maze.isWall(nextRow, nextCol)) {
+            let row = nextRow;
+            let col = nextCol;
+            return true;
+        }
+
+        return false;
+    }
+
+    method void draw(Maze maze) {
+        var int x1;
+        var int y1;
+        var int x2;
+        var int y2;
+        var int margin;
+        var int size;
+
+        let margin = 3;
+        let size = maze.getTileSize();
+        let x1 = maze.getCellX(col) + margin;
+        let y1 = maze.getCellY(row) + margin;
+        let x2 = x1 + size - (margin + margin) - 1;
+        let y2 = y1 + size - (margin + margin) - 1;
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x1, y1, x2, y2);
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x1 + 2, y1 + 3, x1 + 3, y1 + 4);
+        do Screen.drawRectangle(x2 - 3, y1 + 3, x2 - 2, y1 + 4);
+        do Screen.drawRectangle(x1 + 3, y2 - 4, x2 - 3, y2 - 3);
+        return;
+    }
+
+    method boolean isAt(int targetRow, int targetCol) {
+        return (row = targetRow) & (col = targetCol);
+    }
+
+    method int getRow() {
+        return row;
+    }
+
+    method int getCol() {
+        return col;
+    }
+}
