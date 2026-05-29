@@ -29,3 +29,7 @@ Proyecto en Jack para Nand2Tetris: un laberinto simple con jugador, enemigo con 
 9. Te mueves con W A S D.
 10. Tu objetivo es agarrar la comida para ganar, son 2.
 11. Evita al enemigo.
+
+## Adicional
+
+Este codigo fue hecho con ayuda de inteligencia artificial.
